@@ -49,13 +49,13 @@ public class TLVParser {
 		for( int counter = 0; counter < length; counter++ )
 			valueList.add( iterator.next() );
 		
-		Iterator<Byte> innerIterator = valueList.iterator();
-		while( innerIterator.hasNext() ) {
-			Byte followingTag = innerIterator.next();
+		Iterator<Byte> innerIterrator = valueList.iterator();
+		while( innerIterrator.hasNext() ) {
+			Byte followingTag = innerIterrator.next();
 			if( TLVUtils.isPrimitive( followingTag ) )
-				constructed.add( buildPrimitive( followingTag, innerIterator ) );
+				constructed.add( buildPrimitive( followingTag, innerIterrator ) );
 			else
-				constructed.add( buildConstructed( followingTag, innerIterator ) );
+				constructed.add( buildConstructed( followingTag, innerIterrator ) );
 		}
 		
 		return constructed;
@@ -67,7 +67,7 @@ public class TLVParser {
 		List<Byte> tagList = getNextTag( firstTag, iterator );
 		primitive.setTag( list2byte( tagList ) );
 		
-		//System.out.println( HexadecimalUtils.convert2Hexadecimal( primitive.getTag() ) );
+		System.out.println( HexadecimalUtils.convert2Hexadecimal( primitive.getTag() ) );
 		
 		List<Byte> lengthList = getNextLength( iterator );
 		
@@ -75,7 +75,9 @@ public class TLVParser {
 		
 		/* Solving value
 		 **/
-		List<Byte> valueList = getNextValue( length, iterator );
+		List<Byte> valueList = new ArrayList<Byte>();
+		for( int counter = 0; counter < length; counter++ )
+			valueList.add( iterator.next() );
 		
 		primitive.setValue( list2byte( valueList ) );
 		
@@ -124,13 +126,6 @@ public class TLVParser {
 		}
 		
 		return length;
-	}
-	
-	private static List<Byte> getNextValue( int length, Iterator<Byte> iterator ) {
-		List<Byte> valueList = new ArrayList<Byte>();
-		for( int counter = 0; counter < length; counter++ )
-			valueList.add( iterator.next() );
-		return valueList;
 	}
 	
 	private static byte[] list2byte( List<Byte> list ) {
