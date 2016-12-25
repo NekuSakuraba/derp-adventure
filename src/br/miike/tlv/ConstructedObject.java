@@ -84,7 +84,6 @@ public class ConstructedObject extends DataObject {
 			iterators.add( dataObjects.iterator() );
 		}
 		
-		@Override
 		public boolean hasNext() {
 			if( iterators.empty() )
 				return false;
@@ -97,7 +96,6 @@ public class ConstructedObject extends DataObject {
 			}
 		}
 		
-		@Override
 		public DataObject next() {
 			if( iterators.empty() )
 				throw new NoSuchElementException();
@@ -113,7 +111,6 @@ public class ConstructedObject extends DataObject {
 			}
 		}
 		
-		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
